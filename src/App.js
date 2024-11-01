@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './App.css';
+import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]); //State hold list of task
@@ -46,27 +46,21 @@ function App() {
           Daily To-Do List
         </h1>
 
-        <div className="flex gap-2 mb-4">
+        <div className="input-container">
           <input
             type="text"
             placeholder="Add new list item"
             value={newTask}
-            onChange={(e) => setNewTask(e.target.value)} //update input state
-            className="border p-2 rounded w-full"
-          ></input>
-
-          <button
-            onClick={addTask} // Add task
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            ADD
+            onChange={(e) => setNewTask(e.target.value)}
+            className="task-input"
+          />
+          <button onClick={addTask} className="add-button">
+            Add
           </button>
         </div>
 
         <ul className="space-y-2">
           {tasks.map((task, index) => (
-            
-
             // Adding external css for checkbox
             <li
               key={index}
@@ -86,36 +80,17 @@ function App() {
                 {task.text}
               </span>
             </li>
-
           ))}
         </ul>
-
 
         {tasks.length > 0 && (
           <div className="flex justify-between items-center mt-4 text-gray-400 text-sm">
             <p>{tasks.length} items</p>
-            <button
-              onClick={clearTasks}
-              className="hover:underline"
-            >
+            <button onClick={clearTasks} className="hover:underline">
               Clear All
             </button>
           </div>
         )}
-        
-        {/* {tasks.length > 0 && (
-          <button
-            onClick={clearTasks}
-            className="text-sm text-red-500 mt-4 hover:underline"
-          >
-            Clear All
-          </button>
-        )}
-
-        <div className="mt-4 text-center">
-          <p>Total Tasks: {tasks.length}</p>{" "}
-          
-        </div> */}
       </div>
     </div>
   );

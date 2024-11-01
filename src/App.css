@@ -45,3 +45,36 @@
     transform: rotate(45deg); /* Rotate to create checkmark */
   }
   
+
+  /* Input container style */
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .task-input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+  }
+  
+  .add-button {
+    padding: 8px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    /* font-weight: bold; */
+    border-left: 1px solid #ccc;
+    transition: background-color 0.3s;
+    border-radius: 6px;
+  }
+  
+  .add-button:hover {
+    background-color: #0056b3;
+  }
