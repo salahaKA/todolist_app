@@ -108,4 +108,24 @@
   .sort-select:hover {
     border-color: #4f46e5; /* example color */
   }
-  
+
+  .edit-button,
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  color: blue;
+}
+
+.delete-button:hover {
+  color: red;
+}
+
+/* Optional: Keep both buttons in the same position across tasks */
+.flex {
+  display: flex;
+  align-items: center;
+}
