@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState([]); //State hold list of task
+  const [newTask, setNewTask] = useState(""); //State hold new task input
 
+  // Fun to add new task
   const addTask = () => {
     if (newTask.trim()) {
       console.log("Adding task:", newTask);
       setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask("");
+      setNewTask(""); // clear input field
     } else {
       alert("No task entered");
-      console.log("tasks cannot be empty");
+      console.log("tasks cannot be empty"); //log the err
     }
   };
 
+  // Fuction to toggle task completion task on console
   const toggleTaskCompletion = (index) => {
     const updatedTasks = tasks.map((task, i) =>
       i === index ? { ...task, completed: !task.completed } : task
@@ -26,10 +28,12 @@ function App() {
     // }
     // console.log("Updated tasks:", updatedTasks);
 
-    const completedTasks = updatedTasks.filter(task => task.completed);
+    // Filter and log completed task
+    const completedTasks = updatedTasks.filter((task) => task.completed);
     console.log("Completed tasks:", completedTasks);
   };
 
+  // function to clear/reset all tasks
   const clearTasks = () => {
     setTasks([]);
   };
@@ -46,12 +50,12 @@ function App() {
             type="text"
             placeholder="Add new list item"
             value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
+            onChange={(e) => setNewTask(e.target.value)} //update input state
             className="border p-2 rounded w-full"
           ></input>
 
           <button
-            onClick={addTask}
+            onClick={addTask} // Add task
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             ADD
@@ -60,11 +64,14 @@ function App() {
 
         <ul className="space-y-2">
           {tasks.map((task, index) => (
-            <li key={index} className="flex items-center gap-2">
+            <li
+              key={index}
+              className="flex items-center gap-2 hover:bg-blue-100 transition duration-200 p-2 rounded" // Add hover and transition classes
+            >
               <input
                 type="checkbox"
                 checked={task.completed}
-                onChange={() => toggleTaskCompletion(index)}
+                onChange={() => toggleTaskCompletion(index)} // Toggle completion on checkbox change
                 className="form-checkbox text-green-500"
               />
               <span
@@ -86,7 +93,8 @@ function App() {
         )}
 
         <div className="mt-4 text-center">
-          <p>Total Tasks: {tasks.length}</p>
+          <p>Total Tasks: {tasks.length}</p>{" "}
+          {/* Display total number of tasks */}
         </div>
       </div>
     </div>
