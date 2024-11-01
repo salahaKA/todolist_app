@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
@@ -9,9 +8,10 @@ function App() {
     if (newTask.trim()) {
       console.log("Adding task:", newTask);
       setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask(""); 
+      setNewTask("");
     } else {
-      alert("No task entered"); 
+      alert("No task entered");
+      console.log("tasks cannot be empty");
     }
   };
 
@@ -20,16 +20,24 @@ function App() {
       i === index ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
+
+    // if (!updatedTasks[index].completed) {
+    //   console.log("Completed task:", updatedTasks[index]);
+    // }
+    // console.log("Updated tasks:", updatedTasks);
+
+    const completedTasks = updatedTasks.filter(task => task.completed);
+    console.log("Completed tasks:", completedTasks);
   };
 
   const clearTasks = () => {
     setTasks([]);
   };
-  
+
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2x1 font-bold text-center mb-4">
+        <h1 className="text-2xl font-bold text-center mb-4">
           Daily To-Do List
         </h1>
 
@@ -51,15 +59,17 @@ function App() {
         </div>
 
         <ul className="space-y-2">
-        {tasks.map((task, index) => (
+          {tasks.map((task, index) => (
             <li key={index} className="flex items-center gap-2">
-              <input 
+              <input
                 type="checkbox"
                 checked={task.completed}
                 onChange={() => toggleTaskCompletion(index)}
                 className="form-checkbox text-green-500"
               />
-              <span className={task.completed ? "line-through text-gray-500" : ""}>
+              <span
+                className={task.completed ? "line-through text-gray-500" : ""}
+              >
                 {task.text}
               </span>
             </li>
@@ -67,13 +77,17 @@ function App() {
         </ul>
 
         {tasks.length > 0 && (
-          <button 
+          <button
             onClick={clearTasks}
             className="text-sm text-red-500 mt-4 hover:underline"
           >
             Clear All
           </button>
         )}
+
+        <div className="mt-4 text-center">
+          <p>Total Tasks: {tasks.length}</p>
+        </div>
       </div>
     </div>
   );
