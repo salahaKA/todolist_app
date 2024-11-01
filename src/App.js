@@ -82,6 +82,7 @@ function App() {
             </li>
           ))}
         </ul>
+        <hr></hr>
 
         {tasks.length > 0 && (
           <div className="flex justify-between items-center mt-4 text-gray-400 text-sm">
