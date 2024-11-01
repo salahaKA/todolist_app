@@ -85,3 +85,27 @@
   .add-button:hover {
     background-color: #0056b3;
   }
+
+
+
+  /* Sort-buttton style */
+
+  .sort-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .sort-select {
+    padding: 0.5rem;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  
+  .sort-select:hover {
+    border-color: #4f46e5; /* example color */
+  }
+  

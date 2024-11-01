@@ -17,6 +17,17 @@ function App() {
     }
   };
 
+  // Sorting list items
+  const sortTasks = (type) => {
+    let sortedTasks = [...tasks]; // Create a new array copy to avoid in-place mutation
+    if (type === "alphabetical") {
+      sortedTasks = sortedTasks.sort((a, b) => a.text.localeCompare(b.text));
+    } else if (type === "completed") {
+      sortedTasks = sortedTasks.sort((a, b) => a.completed - b.completed);
+    }
+    setTasks([...sortedTasks]); // Spread operator to create a new reference and trigger re-render
+  };
+
   // Fuction to toggle task completion task on console
   const toggleTaskCompletion = (index) => {
     const updatedTasks = tasks.map((task, i) =>
@@ -43,7 +54,7 @@ function App() {
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-2xl font-extrabold text-blue-950 text-center mb-4">
-          Daily To-Do List
+          Daily To Do List
         </h1>
 
         <div className="input-container">
@@ -57,6 +68,19 @@ function App() {
           <button onClick={addTask} className="add-button">
             Add
           </button>
+        </div>
+
+        {/* Sorting list items */}
+        <div className="sort-container mb-4 flex items-center">
+          <label className="mr-2 font-bold">Sort by:</label>
+          <select
+            onChange={(e) => sortTasks(e.target.value)}
+            className="sort-select"
+          >
+            <option value="">Select an option</option>
+            <option value="alphabetical">Alphabetically</option>
+            <option value="completed">By Completed</option>
+          </select>
         </div>
 
         <ul className="space-y-2">
