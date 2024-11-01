@@ -1,0 +1,47 @@
+/* Custom Checkbox Styles */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox input {
+    opacity: 0; /* Hide the default checkbox */
+    position: absolute;
+  }
+  
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4CAF50; /* Border color */
+    background-color: white; /* Background color */
+    border-radius: 4px; /* Rounded corners */
+    display: inline-block;
+    position: relative;
+    transition: background-color 0.2s;
+  }
+  
+  .custom-checkbox input:checked + .checkmark {
+    background-color: #4CAF50; /* Change background color when checked */
+  }
+  
+  .checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .custom-checkbox input:checked + .checkmark::after {
+    display: block; /* Show checkmark */
+  }
+  
+  .custom-checkbox .checkmark::after {
+    left: 7px; /* Position the checkmark */
+    top: 2px; /* Position the checkmark */
+    width: 5px; /* Checkmark width */
+    height: 10px; /* Checkmark height */
+    border: solid white; /* Checkmark color */
+    border-width: 0 2px 2px 0; /* Checkmark shape */
+    transform: rotate(45deg); /* Rotate to create checkmark */
+  }
+  

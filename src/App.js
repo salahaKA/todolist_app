@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]); //State hold list of task
@@ -64,22 +65,41 @@ function App() {
 
         <ul className="space-y-2">
           {tasks.map((task, index) => (
+            // <li
+            //   key={index}
+            //   className="flex items-center gap-2 hover:bg-blue-100 transition duration-200 p-2 rounded" // Added hover and transition classes
+            // >
+            //   <input
+            //     type="checkbox"
+            //     checked={task.completed}
+            //     onChange={() => toggleTaskCompletion(index)} // Toggle completion on checkbox change
+            //     className="form-checkbox text-green-500"
+            //   />
+            //   <span
+            //     className={task.completed ? "line-through text-gray-500" : ""}
+            //   >
+            //     {task.text}
+            //   </span>
+            // </li>
             <li
               key={index}
               className="flex items-center gap-2 hover:bg-blue-100 transition duration-200 p-2 rounded" // Add hover and transition classes
             >
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => toggleTaskCompletion(index)} // Toggle completion on checkbox change
-                className="form-checkbox text-green-500"
-              />
+              <label className="custom-checkbox">
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => toggleTaskCompletion(index)} // Toggle completion on checkbox change
+                />
+                <span className="checkmark"></span>
+              </label>
               <span
                 className={task.completed ? "line-through text-gray-500" : ""}
               >
                 {task.text}
               </span>
             </li>
+
           ))}
         </ul>
 
