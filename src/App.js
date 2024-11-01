@@ -1,7 +1,30 @@
-import React from "react";
-// import './index.css';
+import React, { useState } from "react";
+
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  const addTask = () => {
+    if (newTask.trim()) {
+      console.log("Adding task:", newTask);
+      setTasks([...tasks, { text: newTask, completed: false }]);
+      setNewTask(""); 
+    } else {
+      alert("No task entered"); 
+    }
+  };
+
+  const toggleTaskCompletion = (index) => {
+    const updatedTasks = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  const clearTasks = () => {
+    setTasks([]);
+  };
   
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
@@ -14,13 +37,43 @@ function App() {
           <input
             type="text"
             placeholder="Add new list item"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
             className="border p-2 rounded w-full"
           ></input>
 
-          <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">ADD</button>
+          <button
+            onClick={addTask}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            ADD
+          </button>
         </div>
 
+        <ul className="space-y-2">
+        {tasks.map((task, index) => (
+            <li key={index} className="flex items-center gap-2">
+              <input 
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTaskCompletion(index)}
+                className="form-checkbox text-green-500"
+              />
+              <span className={task.completed ? "line-through text-gray-500" : ""}>
+                {task.text}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {tasks.length > 0 && (
+          <button 
+            onClick={clearTasks}
+            className="text-sm text-red-500 mt-4 hover:underline"
+          >
+            Clear All
+          </button>
+        )}
       </div>
     </div>
   );
