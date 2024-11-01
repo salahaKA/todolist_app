@@ -24,8 +24,9 @@
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.custom-checkbox input:checked + .checkmark {
-  background-color: #00d084; /* Circle color when checked */
+.custom-checkbox input:checked+.checkmark {
+  background-color: #00d084;
+  /* Circle color when checked */
   border-color: #00d084;
 }
 
@@ -40,76 +41,68 @@
   transform: rotate(45deg);
   display: none;
 }
-/* .custom-checkbox .checkmark::after {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: white;
-  display: none;
-} */
 
-.custom-checkbox input:checked + .checkmark::after {
+.custom-checkbox input:checked+.checkmark::after {
   display: block;
 }
 
-  /* Input container style */
+/* Input container style */
 
-  .input-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .task-input {
-    flex: 1;
-    border: none;
-    padding: 10px;
-    outline: none;
-  }
-  
-  .add-button {
-    padding: 8px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    /* font-weight: bold; */
-    border-left: 1px solid #ccc;
-    transition: background-color 0.3s;
-    border-radius: 6px;
-  }
-  
-  .add-button:hover {
-    background-color: #0056b3;
-  }
+.input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.task-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  outline: none;
+}
+
+.add-button {
+  padding: 8px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  /* font-weight: bold; */
+  border-left: 1px solid #ccc;
+  transition: background-color 0.3s;
+  border-radius: 6px;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
 
 
 
-  /* Sort-buttton style */
+/* Sort-buttton style */
 
-  .sort-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .sort-select {
-    padding: 0.5rem;
-    border: 1px solid #d3d3d3;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.3s;
-  }
-  
-  .sort-select:hover {
-    border-color: #4f46e5; /* example color */
-  }
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .edit-button,
+.sort-select {
+  padding: 0.5rem;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.sort-select:hover {
+  border-color: #4f46e5;
+}
+
+.edit-button,
 .delete-button {
   background: none;
   border: none;
@@ -124,7 +117,7 @@
   color: red;
 }
 
-/* Optional: Keep both buttons in the same position across tasks */
+/* Keep both buttons in the same position across tasks */
 .flex {
   display: flex;
   align-items: center;

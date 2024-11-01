@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSort,faTrash,faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faSort, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
-  const [tasks, setTasks] = useState([]); //State hold list of task
-  const [newTask, setNewTask] = useState(""); //State hold new task input
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  // Load tasks from local storage on component mount
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (storedTasks) {
+      setTasks(storedTasks);
+    }
+  }, []);
+
+  // Save tasks to local storage whenever tasks change
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   // Fun to add new task
   const addTask = () => {
     if (newTask.trim()) {
       console.log("Task Added:", newTask);
       setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask(""); // clear input field
+      setNewTask("");
     } else {
       alert("No task entered");
-      console.log("tasks cannot be empty"); //log the err
+      console.log("tasks cannot be empty");
     }
   };
 
@@ -26,37 +39,34 @@ function App() {
     if (type === "alphabetical") {
       sortedTasks = sortedTasks.sort((a, b) => a.text.localeCompare(b.text));
     } else if (type === "completed") {
-      sortedTasks = sortedTasks.sort((a, b) => a.completed - b.completed);
+      sortedTasks = sortedTasks.sort((a, b) => {
+        return b.completed === a.completed ? 0 : b.completed ? 1 : -1;
+      });
     }
-    setTasks([...sortedTasks]); // Spread operator to create a new reference and trigger re-render
+    setTasks(sortedTasks);
   };
 
-  // delete taskList
+  // delete todo
   const deleteTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
     console.log("Task deleted:", tasks[index]);
   };
 
-  // edit taskList
+  // edit todo
   const editTask = (index) => {
     const taskToEdit = tasks[index];
-    setNewTask(taskToEdit.text); // Pre-fill input with task text
+    setNewTask(taskToEdit.text);
     deleteTask(index); // Remove task from list before editing
-    console.log("Editing task:", taskToEdit);
+    // console.log("Editing task:", taskToEdit);
   };
 
-  // Fuction to toggle task completion task on console
+  // toggle task completion on console
   const toggleTaskCompletion = (index) => {
     const updatedTasks = tasks.map((task, i) =>
       i === index ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
-
-    // if (!updatedTasks[index].completed) {
-    //   console.log("Completed task:", updatedTasks[index]);
-    // }
-    // console.log("Updated tasks:", updatedTasks);
 
     // Filter and log completed task
     const completedTasks = updatedTasks.filter((task) => task.completed);
@@ -66,6 +76,7 @@ function App() {
   // function to clear/reset all tasks
   const clearTasks = () => {
     setTasks([]);
+    localStorage.removeItem("tasks"); // Remove tasks from local storage
   };
 
   return (
@@ -81,18 +92,16 @@ function App() {
             placeholder="Add new list item"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            className="task-input"
+            className="task-input w-full p-2 border rounded"
           />
           <button onClick={addTask} className="add-button">
             Add
           </button>
         </div>
 
-        
-
+        {/* Task List items */}
         <ul className="space-y-2">
           {tasks.map((task, index) => (
-            // Adding external css for checkbox
             <li
               key={index}
               className="flex items-center gap-2 p-2 rounded hover:text-blue-500 transition duration-200" // Add text hover and transition classes
@@ -111,28 +120,26 @@ function App() {
                 {task.text}
               </span>
 
-
               {/* Button container to position Edit and Delete buttons */}
-      <div className="flex gap-2 ml-auto">
-        {/* Edit button with icon */}
-        <button
-          onClick={() => editTask(index)}
-          className="edit-button p-1 text-blue-500 hover:text-blue-700 transition duration-200"
-          title="Edit task"
-        >
-          <FontAwesomeIcon icon={faEdit} />
-        </button>
+              <div className="flex gap-2 ml-auto">
+                {/* Edit button with icon */}
+                <button
+                  onClick={() => editTask(index)}
+                  className="edit-button p-1 text-blue-500 hover:text-blue-700 transition duration-200"
+                  title="Edit task"
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
 
-        {/* Delete button with icon */}
-        <button
-          onClick={() => deleteTask(index)}
-          className="delete-button p-1 text-red-500 hover:text-red-700 transition duration-200"
-          title="Delete task"
-        >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
-      </div>
-      
+                {/* Delete button with icon */}
+                <button
+                  onClick={() => deleteTask(index)}
+                  className="delete-button p-1 text-red-500 hover:text-red-700 transition duration-200"
+                  title="Delete task"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -146,23 +153,26 @@ function App() {
               Clear All
             </button>
             {/* Sorting list items */}
-        <div className="sort-container mb-4 flex items-center">
-          {/* <label className="mr-2 font-bold">Sort by:</label> */}
+            <div className="sort-container mb-4 flex items-center">
+              {/* <label className="mr-2 font-bold">Sort by:</label> */}
 
-          <FontAwesomeIcon icon={faSort} className="text-gray-600 mr-2" title="Sort tasks" />
-          <select
-            onChange={(e) => sortTasks(e.target.value)}
-            className="sort-select"
-          >
-            <option value="">Select an option</option>
-            <option value="alphabetical">Alphabetically</option>
-            <option value="completed">By Completed</option>
-          </select>
-        </div>
+              <FontAwesomeIcon
+                icon={faSort}
+                className="text-gray-600 mr-2"
+                title="Sort tasks"
+              />
+              <select
+                onChange={(e) => sortTasks(e.target.value)}
+                className="sort-select"
+              >
+                <option value="">Select an option</option>
+                <option value="alphabetical">Alphabetically</option>
+                <option value="completed">By Completed</option>
+              </select>
+            </div>
           </div>
         )}
       </div>
-      
     </div>
   );
 }
