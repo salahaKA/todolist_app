@@ -65,22 +65,9 @@ function App() {
 
         <ul className="space-y-2">
           {tasks.map((task, index) => (
-            // <li
-            //   key={index}
-            //   className="flex items-center gap-2 hover:bg-blue-100 transition duration-200 p-2 rounded" // Added hover and transition classes
-            // >
-            //   <input
-            //     type="checkbox"
-            //     checked={task.completed}
-            //     onChange={() => toggleTaskCompletion(index)} // Toggle completion on checkbox change
-            //     className="form-checkbox text-green-500"
-            //   />
-            //   <span
-            //     className={task.completed ? "line-through text-gray-500" : ""}
-            //   >
-            //     {task.text}
-            //   </span>
-            // </li>
+            
+
+            // Adding external css for checkbox
             <li
               key={index}
               className="flex items-center gap-2 hover:bg-blue-100 transition duration-200 p-2 rounded" // Add hover and transition classes
