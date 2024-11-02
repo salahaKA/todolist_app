@@ -7,6 +7,7 @@ import { faSort, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  
 
   // Load tasks from local storage on component mount
   useEffect(() => {
@@ -58,7 +59,6 @@ function App() {
     const taskToEdit = tasks[index];
     setNewTask(taskToEdit.text);
     deleteTask(index); // Remove task from list before editing
-    // console.log("Editing task:", taskToEdit);
   };
 
   // toggle task completion on console
@@ -79,16 +79,16 @@ function App() {
     localStorage.removeItem("tasks"); // Remove tasks from local storage
   };
 
+  // Calculate completion percentage
+  const completionPercentage = tasks.length
+    ? (tasks.filter((task) => task.completed).length / tasks.length) * 100
+    : 0;
+
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
-        
-        {/* <h1 className="text-2xl font-extrabold text-blue-950 text-center mb-4">
-          Daily To Do List
-        </h1> */}
-
+      <div className="bg-white p-2 rounded-2xl shadow-lg max-w-md w-full">
         <h1
-          className="text-2xl font-extrabold  text-center mb-4"
+          className="text-2xl p-4 font-extrabold  text-center mb-4"
           style={{
             fontSize: "30px",
             color: "#0A1F63",
@@ -97,7 +97,6 @@ function App() {
         >
           Daily To Do List
         </h1>
-
         <div className="input-container">
           <input
             type="text"
@@ -111,8 +110,20 @@ function App() {
           </button>
         </div>
 
+        {/* Display "Add items" if the list is empty */}
+        {tasks.length === 0 && (
+          <div className="empty-message-container text-center p-4 mt-4">
+            <p className="text-gray-500 text-lg font-medium">
+              <span role="img" aria-label="pointer" className="mr-2">
+                📝
+              </span>
+              Add your first todo!
+            </p>
+          </div>
+        )}
+
         {/* Task List items */}
-        <ul className="space-y-2">
+        <ul className="space-y-2 p-4">
           {tasks.map((task, index) => (
             <li
               key={index}
@@ -142,7 +153,6 @@ function App() {
                 >
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
-
                 {/* Delete button with icon */}
                 <button
                   onClick={() => deleteTask(index)}
@@ -156,16 +166,24 @@ function App() {
           ))}
         </ul>
 
-        <hr></hr>
+        <hr className="w-[80%] mx-auto my-4 border-gray-300 opacity-60" />
         {/* todo item count */}
         {tasks.length > 0 && (
           <div className="flex justify-between items-center mt-4 text-gray-400 text-sm">
             <p>{tasks.length} items</p>
 
+            {/* Progress bar */}
+            <div className="progress-bar">
+              <div
+                className="progress"
+                style={{ width: `${completionPercentage}%` }}
+              ></div>
+              <span>{Math.round(completionPercentage)}% Completed</span>
+            </div>
+
             {/* Sorting list items */}
             <div className="sort-container  flex items-center">
               {/* <label className="mr-2 font-bold">Sort by:</label> */}
-
               <FontAwesomeIcon
                 icon={faSort}
                 className="text-gray-600 mr-2"
@@ -180,10 +198,8 @@ function App() {
                 <option value="completed">By Completed</option>
               </select>
             </div>
-
-            <button onClick={clearTasks} className="hover:underline">
-              Clear All
-            </button>
+            {/* clear all todo */}
+            <button onClick={clearTasks}>Clear All</button>
           </div>
         )}
       </div>

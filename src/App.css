@@ -47,7 +47,6 @@
 }
 
 /* Input container style */
-
 .input-container {
   display: flex;
   align-items: center;
@@ -79,10 +78,7 @@
   background-color: #0056b3;
 }
 
-
-
 /* Sort-buttton style */
-
 .sort-container {
   display: flex;
   align-items: center;
