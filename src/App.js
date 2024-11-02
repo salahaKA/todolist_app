@@ -81,8 +81,20 @@ function App() {
 
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-2xl font-extrabold text-blue-950 text-center mb-4">
+      <div className="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
+        
+        {/* <h1 className="text-2xl font-extrabold text-blue-950 text-center mb-4">
+          Daily To Do List
+        </h1> */}
+
+        <h1
+          className="text-2xl font-extrabold  text-center mb-4"
+          style={{
+            fontSize: "30px",
+            color: "#0A1F63",
+            fontFamily: "Arial, Helvetica, sans-serif",
+          }}
+        >
           Daily To Do List
         </h1>
 
@@ -145,15 +157,13 @@ function App() {
         </ul>
 
         <hr></hr>
-
+        {/* todo item count */}
         {tasks.length > 0 && (
           <div className="flex justify-between items-center mt-4 text-gray-400 text-sm">
             <p>{tasks.length} items</p>
-            <button onClick={clearTasks} className="hover:underline">
-              Clear All
-            </button>
+
             {/* Sorting list items */}
-            <div className="sort-container mb-4 flex items-center">
+            <div className="sort-container  flex items-center">
               {/* <label className="mr-2 font-bold">Sort by:</label> */}
 
               <FontAwesomeIcon
@@ -170,6 +180,10 @@ function App() {
                 <option value="completed">By Completed</option>
               </select>
             </div>
+
+            <button onClick={clearTasks} className="hover:underline">
+              Clear All
+            </button>
           </div>
         )}
       </div>
