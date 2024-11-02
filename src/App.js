@@ -7,7 +7,7 @@ import { faSort, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  
+  const [error, setError] = useState("");
 
   // Load tasks from local storage on component mount
   useEffect(() => {
@@ -28,9 +28,10 @@ function App() {
       console.log("Task Added:", newTask);
       setTasks([...tasks, { text: newTask, completed: false }]);
       setNewTask("");
+      setError(""); 
     } else {
-      alert("No task entered");
-      console.log("tasks cannot be empty");
+      setError("Task cannot be empty"); 
+      console.log("No task entered");
     }
   };
 
@@ -103,16 +104,23 @@ function App() {
             placeholder="Add new list item"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            className="task-input w-full p-2 border rounded"
+            className={`task-input w-full p-2 border rounded ${
+              error ? "border-red-500" : ""
+            }`}
           />
           <button onClick={addTask} className="add-button">
             Add
           </button>
         </div>
 
+        {/* Display error message below the input if there's an error */}
+        {error && (
+          <p className="text-red-500 text-sm mt-1">{error}</p>
+        )}
+
         {/* Display "Add items" if the list is empty */}
         {tasks.length === 0 && (
-          <div className="empty-message-container text-center p-4 mt-4">
+          <div className="text-center p-4 mt-4">
             <p className="text-gray-500 text-lg font-medium">
               <span role="img" aria-label="pointer" className="mr-2">
                 📝

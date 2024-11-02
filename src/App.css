@@ -118,3 +118,7 @@
   display: flex;
   align-items: center;
 }
+
+.border-red-500 {
+  border-color: red !important; /* Add this to your CSS */
+}
